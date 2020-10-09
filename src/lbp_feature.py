@@ -11,7 +11,7 @@ import cv2
 radius = 1
 n_point = radius * 8
 
-image = cv2.imread('pic/rm.jpg')
+image = cv2.imread('pic/001A08.JPG')
 img_del = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 plt.subplot(111)
 plt.imshow(img_del)
@@ -29,9 +29,13 @@ plt.subplot(111)
 plt.imshow(lbp, plt.cm.gray)
 plt.show()
 print(lbp)
-# max_bins = int(lbp.max() + 1)
-# filename = 'lbp.txt'
-# np.savetxt(filename, lbp, fmt='%.2f')
+max_bins = int(lbp.max() + 1)
+
+lbp_hist, lbp_bins = np.histogram(lbp, normed=True, bins=max_bins, range=(0, max_bins))
+filename_hist = 'lbp_hist.txt'
+filename_bins = 'lbp_bins.txt'
+np.savetxt(filename_hist, lbp_hist, fmt='%.4f')
+np.savetxt(filename_bins, lbp_bins, fmt='%.4f')
 
 
 '''
