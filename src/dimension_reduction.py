@@ -3,20 +3,11 @@ from sklearn.decomposition import PCA
 from PIL import Image
 import sys
 
-
+'''
 # read_info = open("dataset/hist_train/lbp_hist_1.txt", "r").read()
 # info = np.loadtxt('dataset/hist_train/lbp_hist_1.txt')
 info = np.loadtxt('face_detect/train1/lbp_hist/lbp_hist_1.txt')
 lbp_hist = info.reshape(1, -1)
-
-
-'''
-info2 = np.loadtxt('dataset/hist_train/lbp_hist_2.txt')
-lbp_hist2 = info2.reshape(1, -1)
-lbp_hist2 = lbp_hist2.T
-lbp_hist = np.hstack((lbp_hist1, lbp_hist2))
-print(lbp_hist)
-'''
 
 
 i = 2
@@ -37,44 +28,43 @@ new_lbp_hist = pca.fit_transform(lbp_hist)
 print("各主成分占比：", pca.explained_variance_ratio_)
 # np.savetxt("dataset/pca_train/pca_lbp_hist_1.txt", new_lbp_hist, fmt='%.4f')
 np.savetxt("face_detect/train1/pca_lbp_hist_1.txt", new_lbp_hist, fmt='%.4f')
-
-
-def z_score_normalization(x, max_, min_):
-    x = (x - min_) / (max_ - min_)
-    return x
-
-
-res = z_score_normalization(new_lbp_hist, 0.0982, -0.0940)
-np.savetxt("face_detect/train1/normalization.txt", res, fmt='%.4f')
-
 '''
-# 将图片分割成 3 * 3 个小区域
-image = Image.open("face_detect/train1/1_375.png")
-width, height = image.size
-new_img_len = width
-if width < height:
-    new_img_len = height
 
-new_img = Image.new(image.mode, (new_img_len, new_img_len), color='white')
-if width > height:
-    new_img.paste(image, (0, int((new_img_len - height) / 2)))
-else:
-    new_img.paste(image, (int((new_img_len - width) / 2), 0))
+log_file = "log/dim_red_log.txt"
 
-new_width, new_height = new_img.size
-item_width = int(new_width / 3)
-box_list = []
-for i in range(0, 3):
-    for j in range(0, 3):
-        box = (j * item_width, i * item_width, (j + 1) * item_width, (i + 1) * item_width)
-        box_list.append(box)
+# 给每张图像分割后的9个小区域连成直方图（9 x 256维）降维，将成 9 x 1 维
+def dimRedPerImgHist(img_path, save_path, index):
+    info = np.loadtxt(img_path + "lbphist1.txt")
+    lbp_hist = info.reshape(1, -1)
+    i = 2
+    while i < 10:
+        tmp_path = img_path + "lbphist" + str(i) + ".txt"
+        tmp_info = np.loadtxt(tmp_path)
+        tmp_hist = tmp_info.reshape(1, -1)
+        lbp_hist = np.vstack((lbp_hist, tmp_hist))
+        i += 1
 
-img_list = [new_img.crop(box) for box in box_list]
+    pca = PCA(n_components=1)
+    pca.fit(lbp_hist)
+    new_lbp_hist = pca.fit_transform(lbp_hist)
+    save_file = save_path + "lbphistdr" + str(index) + ".txt"
+    np.savetxt(save_file, new_lbp_hist, fmt='%.4f')
 
-index = 1
-for img in img_list:
-    img_tmp = img.convert('RGB')
-    img_tmp.save('face_detect/train1/tmp_save/' + str(index) + '.JPG')
-    index += 1
+# 所有图像进行降维
+def dimRedAllHist(data_path, save_path, nums):
+    index = 1
+    while index < nums:
+        img_path = data_path + str(index) + "/"
+        fp = open(log_file, 'a+')
+        fp.write(img_path + '\n')
+        dimRedPerImgHist(img_path, save_path, index)
+        index += 1
 
-'''
+train_path = "face_detect/train_cut/"
+test_path = "face_detect/test_cut/"
+
+train_save = "face_detect/train_hist/"
+test_save = "face_detect/test_hist/"
+
+# dimRedAllHist(train_path, train_save, 801)
+dimRedAllHist(test_path, test_save, 171)
