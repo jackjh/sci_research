@@ -34,11 +34,11 @@ log_file = "log/dim_red_log.txt"
 
 # 给每张图像分割后的9个小区域连成直方图（9 x 256维）降维，将成 9 x 1 维
 def dimRedPerImgHist(img_path, save_path, index):
-    info = np.loadtxt(img_path + "lbphist1.txt")
+    info = np.loadtxt(img_path + "lbphistnorm1.txt")
     lbp_hist = info.reshape(1, -1)
     i = 2
     while i < 10:
-        tmp_path = img_path + "lbphist" + str(i) + ".txt"
+        tmp_path = img_path + "lbphistnorm" + str(i) + ".txt"
         tmp_info = np.loadtxt(tmp_path)
         tmp_hist = tmp_info.reshape(1, -1)
         lbp_hist = np.vstack((lbp_hist, tmp_hist))
@@ -66,5 +66,10 @@ test_path = "face_detect/test_cut/"
 train_save = "face_detect/train_hist/"
 test_save = "face_detect/test_hist/"
 
+data_path = "face_detect/train_normal/"
+save_path = "face_detect/train_normal/"
+
 # dimRedAllHist(train_path, train_save, 801)
-dimRedAllHist(test_path, test_save, 171)
+# dimRedAllHist(test_path, test_save, 171)
+
+dimRedPerImgHist(data_path, save_path, 1)
