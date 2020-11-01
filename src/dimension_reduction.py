@@ -66,10 +66,12 @@ test_path = "face_detect/test_cut/"
 train_save = "face_detect/train_hist/"
 test_save = "face_detect/test_hist/"
 
-data_path = "face_detect/train_normal/"
-save_path = "face_detect/train_normal/"
+data_path = "face_detect/test_normal/"
+save_path = "face_detect/test_norm_hist/"
 
 # dimRedAllHist(train_path, train_save, 801)
 # dimRedAllHist(test_path, test_save, 171)
 
-dimRedPerImgHist(data_path, save_path, 1)
+dimRedAllHist(data_path, save_path, 171)
+
+# dimRedPerImgHist(data_path, save_path, 1)
