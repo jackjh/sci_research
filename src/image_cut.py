@@ -10,7 +10,7 @@ def image_cut(img):
     image = Image.open(img)
     width, height = image.size
     new_img_len = width
-    if width < height:
+    if width > height:
         new_img_len = height
 
     new_img = Image.new(image.mode, (new_img_len, new_img_len), color='white')

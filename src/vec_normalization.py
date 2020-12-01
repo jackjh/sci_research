@@ -60,7 +60,11 @@ def lbp_hist_avoidNeg(data_path):
 # train_path = "face_detect/train_hist/"
 train_path = "face_detect/train_cut/"
 train_save = "face_detect/train_normal/"
-all_imp_normal(train_path, train_save, 801)
+test_path = "face_detect/test_cut/"
+test_save = "face_detect/test_normal/"
+
+# all_imp_normal(train_path, train_save, 801)
+all_imp_normal(test_path, test_save, 171)
 # lbp_hist_avoidNeg(train_path)
 # lbp_hist_bat_normal(train_path)
 
