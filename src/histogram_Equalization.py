@@ -1,5 +1,6 @@
 import cv2 as cv
 import numpy as np
+from PIL import Image
 import matplotlib.pyplot as plt
 
 train_read = "face_detect/train_tmp/"
@@ -54,6 +55,10 @@ for x in range(0, height):
 print(des)
 
 cv.imshow('des', des)
+
+image = Image.fromarray(des)
+img_new = image.convert('RGB')
+img_new.save('img_new.JPG')
 
 plt.hist(des.reshape(des.size, 1))
 plt.show()
