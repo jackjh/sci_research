@@ -10,7 +10,7 @@ def image_cut(img):
     image = Image.open(img)
     width, height = image.size
     new_img_len = width
-    if width > height:
+    if width < height:
         new_img_len = height
 
     new_img = Image.new(image.mode, (new_img_len, new_img_len), color='white')
@@ -20,10 +20,10 @@ def image_cut(img):
         new_img.paste(image, (int((new_img_len - width) / 2), 0))
 
     new_width, new_height = new_img.size
-    item_width = int(new_width / 3)
+    item_width = int(new_width / 4)
     box_list = []
-    for i in range(0, 3):
-        for j in range(0, 3):
+    for i in range(0, 4):
+        for j in range(0, 4):
             box = (j * item_width, i * item_width, (j + 1) * item_width, (i + 1) * item_width)
             box_list.append(box)
 
@@ -40,16 +40,24 @@ def image_cut(img):
 '''
 
 
-train_read = "face_detect/test_tmp/"
-train_cut_save = "face_detect/test_cut/"
+#read_path = "face_detect/train_tmp/"
+#cut_save = "face_detect/train_cut_4/"
+read_path = "face_detect/train_equa/"
+cut_save = "face_detect/train_cut_equa/"
+
+#read_path = "face_detect/test_tmp/"
+#cut_save = "face_detect/test_cut_4/"
+#read_path = "face_detect/test_equa/"
+#cut_save = "face_detect/test_cut_equa/"
+
 index = 0
-path_list = os.listdir(train_read)
+path_list = os.listdir(read_path)
 path_list.sort(key=lambda x:int(x.split('.')[0]))
 for idx in path_list:
-    img = train_read + idx
+    img = read_path + idx
     img_list = image_cut(img)
     index += 1
-    save_path = train_cut_save + str(index) + "/"
+    save_path = cut_save + str(index) + "/"
     if not os.path.exists(save_path):
         os.mkdir(save_path)
     cut_idx = 1

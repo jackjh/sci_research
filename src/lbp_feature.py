@@ -62,11 +62,17 @@ def compute_hist(data_path, num):
         index += 1
 
 
-train_path = "face_detect/train_cut/"
-test_path = "face_detect/test_cut/"
+train_path = "face_detect/train_cut_4/"
+test_path = "face_detect/test_cut_4/"
+
+train_path_equa = "face_detect/train_cut_equa/"
+test_path_equa = "face_detect/test_cut_equa/"
 
 #compute_hist(train_path, 801)
-compute_hist(test_path, 171)
+#compute_hist(test_path, 171)
+
+#compute_hist(train_path_equa, 801)
+compute_hist(test_path_equa, 171)
 
 
 '''
