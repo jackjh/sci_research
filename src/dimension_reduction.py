@@ -60,6 +60,8 @@ def dimRedAllHist(data_path, save_path, nums):
         dimRedPerImgHist(img_path, save_path, index)
         index += 1
 
+
+
 train_path = "face_detect/train_cut/"
 test_path = "face_detect/test_cut/"
 
@@ -72,6 +74,14 @@ save_path = "face_detect/test_norm_hist/"
 # dimRedAllHist(train_path, train_save, 801)
 # dimRedAllHist(test_path, test_save, 171)
 
-dimRedAllHist(data_path, save_path, 171)
+#dimRedAllHist(data_path, save_path, 171)
 
 # dimRedPerImgHist(data_path, save_path, 1)
+
+info = np.loadtxt("img_equa_hist.txt")
+lbp_hist = info.reshape(1, -1)
+pca = PCA(n_components=18)
+pca.fit(lbp_hist)
+new_lbp_hist = pca.fit_transform(lbp_hist)
+save_file = "equa_hist_pca.txt"
+np.savetxt(save_file, new_lbp_hist, fmt='%.4f')
