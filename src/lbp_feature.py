@@ -87,12 +87,20 @@ def computeImgEquaHist(img):
     lbp_hist, lbp_bins = np.histogram(lbp, normed=True, bins=max_bins, range=(0, max_bins))
     np.set_printoptions(formatter={'float':'{:.4f}'.format})
     resArr = np.array(lbp_bins)
+    resArr = resArr.reshape(1, -1)
+    return resArr
 
 def getEquaHistMatrix(data_path, num):
-    index = 1
+    file = data_path + "1.JPG"
+    hist_info = computeImgEquaHist(file)
+    index = 2
     while index < num:
         file = data_path + str(index) + ".JPG"
+        tmp_hist = computeImgEquaHist(file)
+        hist_info = np.vstack((hist_info, tmp_hist))
+        index += 1
 
+    return hist_info
 
 train_path = "face_detect/train_cut_4/"
 test_path = "face_detect/test_cut_4/"
