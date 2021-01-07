@@ -86,7 +86,7 @@ def computeImgEquaHist(img):
     max_bins = int(lbp.max() + 1)
     lbp_hist, lbp_bins = np.histogram(lbp, normed=True, bins=max_bins, range=(0, max_bins))
     np.set_printoptions(formatter={'float':'{:.4f}'.format})
-    resArr = np.array(lbp_bins)
+    resArr = np.array(lbp_hist)
     resArr = resArr.reshape(1, -1)
     return resArr
 
@@ -102,11 +102,14 @@ def getEquaHistMatrix(data_path, num):
 
     return hist_info
 
-train_path = "face_detect/train_cut_4/"
-test_path = "face_detect/test_cut_4/"
+#train_path = "face_detect/train_cut_4/"
+#test_path = "face_detect/test_cut_4/"
 
-train_path_equa = "face_detect/train_cut_equa/"
-test_path_equa = "face_detect/test_cut_equa/"
+#train_path_equa = "face_detect/train_cut_equa/"
+#test_path_equa = "face_detect/test_cut_equa/"
+
+#train_path = "face_detect/train_equa/"
+#test_path = "face_detect/test_equa/"
 
 #compute_hist(train_path, 801)
 #compute_hist(test_path, 171)
@@ -114,6 +117,12 @@ test_path_equa = "face_detect/test_cut_equa/"
 #compute_hist(train_path_equa, 801)
 #compute_hist(test_path_equa, 171)
 
+#img = "face_detect/train_equa/1.JPG"
+#res = computeImgEquaHist(img)
+#res = getEquaHistMatrix(test_path, 171)
+#print(res)
+
+'''
 img_file = "face_detect/train_equa/11.JPG"
 image = cv2.imread(img_file)
 # 灰度图转换
@@ -132,18 +141,4 @@ max_bins = int(lbp.max() + 1)
 lbp_hist, lbp_bins = np.histogram(lbp, normed=True, bins=max_bins, range=(0, max_bins))
 filename = "img_equa_hist.txt"
 np.savetxt(filename, lbp_hist, fmt='%.4f')
-
-
-'''
-def load_image(img_path):
-    image = Image.open(img_path)
-    img = np.array(image)
-    
-
-
-def lbp_texture_detect():
-    im_hist = np.zeros((200, 256))
-
-    return im_hist
-# end of func lbp_texture_detect
 '''

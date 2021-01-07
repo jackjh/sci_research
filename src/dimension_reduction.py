@@ -2,6 +2,8 @@ import numpy as np
 from sklearn.decomposition import PCA
 from PIL import Image
 import sys
+from lbp_feature import computeImgEquaHist
+from lbp_feature import getEquaHistMatrix
 
 '''
 # read_info = open("dataset/hist_train/lbp_hist_1.txt", "r").read()
@@ -62,14 +64,14 @@ def dimRedAllHist(data_path, save_path, nums):
 
 
 
-train_path = "face_detect/train_cut/"
-test_path = "face_detect/test_cut/"
+train_path = "face_detect/train_equa/"
+test_path = "face_detect/test_equa/"
 
-train_save = "face_detect/train_hist/"
-test_save = "face_detect/test_hist/"
+#train_save = "face_detect/train_hist/"
+#test_save = "face_detect/test_hist/"
 
-data_path = "face_detect/test_normal/"
-save_path = "face_detect/test_norm_hist/"
+#data_path = "face_detect/test_normal/"
+#save_path = "face_detect/test_norm_hist/"
 
 # dimRedAllHist(train_path, train_save, 801)
 # dimRedAllHist(test_path, test_save, 171)
