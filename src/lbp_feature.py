@@ -109,7 +109,7 @@ def getEquaHistMatrix(data_path, num):
 #test_path_equa = "face_detect/test_cut_equa/"
 
 #train_path = "face_detect/train_equa/"
-#test_path = "face_detect/test_equa/"
+test_path = "face_detect/test_equa/"
 
 #compute_hist(train_path, 801)
 #compute_hist(test_path, 171)
@@ -119,7 +119,9 @@ def getEquaHistMatrix(data_path, num):
 
 #img = "face_detect/train_equa/1.JPG"
 #res = computeImgEquaHist(img)
-#res = getEquaHistMatrix(test_path, 171)
+res = getEquaHistMatrix(test_path, 171)
+saveFile = "hist_equa.txt"
+np.savetxt(saveFile, res, fmt='%.4f')
 #print(res)
 
 '''

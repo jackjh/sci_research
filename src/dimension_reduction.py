@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.decomposition import PCA
 from PIL import Image
 import sys
+from sklearn.utils.extmath import svd_flip
 from lbp_feature import computeImgEquaHist
 from lbp_feature import getEquaHistMatrix
 
@@ -63,9 +64,26 @@ def dimRedAllHist(data_path, save_path, nums):
         index += 1
 
 
+def reductEquaHistMatrix(data_matrix):
+    pca = PCA(n_components=18)
+    pca.fit(data_matrix)
+    resArr = pca.fit_transform(data_matrix)
+    #U, S, V = np.linalg.svd(pca_res, full_matrices=False)
+    #U, V = svd_flip(U, V)
+    #resArr = U
+
+    return resArr
+
 
 train_path = "face_detect/train_equa/"
 test_path = "face_detect/test_equa/"
+
+train_lbp_feature = getEquaHistMatrix(train_path, 801)
+test_lbp_feature = getEquaHistMatrix(test_path, 171)
+
+res = reductEquaHistMatrix(test_lbp_feature)
+save_file = "pca_equa.txt"
+np.savetxt(save_file, res, fmt='%.4f')
 
 #train_save = "face_detect/train_hist/"
 #test_save = "face_detect/test_hist/"
@@ -80,6 +98,7 @@ test_path = "face_detect/test_equa/"
 
 # dimRedPerImgHist(data_path, save_path, 1)
 
+'''
 info = np.loadtxt("img_equa_hist.txt")
 lbp_hist = info.reshape(1, -1)
 pca = PCA(n_components=18)
@@ -87,3 +106,4 @@ pca.fit(lbp_hist)
 new_lbp_hist = pca.fit_transform(lbp_hist)
 save_file = "equa_hist_pca.txt"
 np.savetxt(save_file, new_lbp_hist, fmt='%.4f')
+'''
