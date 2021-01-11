@@ -2,8 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel as C
 from sklearn.gaussian_process import GaussianProcessRegressor
+from lbp_feature import computeImgEquaHist
+from lbp_feature import getEquaHistMatrix
 
-
+'''
 train_path = "face_detect/train_norm_hist/"
 train_x_info = np.loadtxt(train_path + "lbphistdr1.txt")
 train_x_data = train_x_info.reshape(1, -1)
@@ -27,6 +29,14 @@ while i < 171:
     tmpData = tmpInfo.reshape(1, -1)
     test_x_data = np.vstack((test_x_data, tmpData))
     i += 1
+
+'''
+
+train_path = "face_detect/train_equa/"
+test_path = "face_detect/test_equa/"
+
+train_x_data = getEquaHistMatrix(train_path, 801)
+test_x_data = getEquaHistMatrix(test_path, 171)
 
 train_y_info = np.loadtxt("face_detect/ageYtrain.txt")
 #train_y_data = train_y_info.reshape(1, -1)

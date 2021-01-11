@@ -9,7 +9,7 @@ from PIL import Image
 import cv2
 import os
 
-radius = 1
+radius = 2
 n_point = radius * 8
 
 # image = cv2.imread('face_detect/2_0.bmp')
@@ -82,7 +82,7 @@ def computeImgEquaHist(img):
     # 灰度图转换
     img_del = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     # LBP处理
-    lbp = local_binary_pattern(img_del, n_point, radius)
+    lbp = local_binary_pattern(img_del, n_point, radius, method='uniform')
     max_bins = int(lbp.max() + 1)
     lbp_hist, lbp_bins = np.histogram(lbp, normed=True, bins=max_bins, range=(0, max_bins))
     np.set_printoptions(formatter={'float':'{:.4f}'.format})
@@ -122,7 +122,7 @@ test_path = "face_detect/test_equa/"
 res = getEquaHistMatrix(test_path, 171)
 saveFile = "hist_equa.txt"
 np.savetxt(saveFile, res, fmt='%.4f')
-#print(res)
+print(res)
 
 '''
 img_file = "face_detect/train_equa/11.JPG"

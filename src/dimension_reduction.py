@@ -64,10 +64,11 @@ def dimRedAllHist(data_path, save_path, nums):
         index += 1
 
 
-def reductEquaHistMatrix(data_matrix):
+def reductEquaHistMatrix(data_path, nums):
+    feature_matrix = getEquaHistMatrix(data_path, nums)
     pca = PCA(n_components=18)
-    pca.fit(data_matrix)
-    resArr = pca.fit_transform(data_matrix)
+    pca.fit(feature_matrix)
+    resArr = pca.fit_transform(feature_matrix)
     #U, S, V = np.linalg.svd(pca_res, full_matrices=False)
     #U, V = svd_flip(U, V)
     #resArr = U
